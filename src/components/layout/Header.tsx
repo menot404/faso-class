@@ -9,7 +9,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 import { Menu, Moon, Sun } from 'lucide-react'
-import { useAuth } from '@/features/auth/use-auth'
+import { useAuth } from '@/hooks/useAuth' 
 import { useTheme } from '@/hooks/useTheme'
 import { useTranslation } from 'react-i18next'
 

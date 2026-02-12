@@ -10,7 +10,7 @@ import {
   Settings,
   LogOut,
 } from 'lucide-react'
-import { useAuth } from '@/features/auth/use-auth'
+import { useAuth } from '@/hooks/useAuth'
 import { useTranslation } from 'react-i18next'
 
 const navItems = [
