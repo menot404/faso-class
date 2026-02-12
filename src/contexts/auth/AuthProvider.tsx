@@ -1,108 +1,51 @@
-import React, { useState, useEffect } from 'react'
-import { AuthContext, type AuthContextType } from './AuthContext'
-import authService from '@/services/auth.service'
-import type { User } from '@/types/auth'
-import type { RegisterFormData } from '@/features/auth/schemas/auth.schema'
+import { useState, useEffect } from 'react'
+import type { User, AuthState } from '@/types/types'
+import { AuthContext } from './AuthContext'
 
-interface AuthProviderProps {
-  children: React.ReactNode
-}
-
-export function AuthProvider({ children }: AuthProviderProps) {
-  const [user, setUser] = useState<User | null>(null)
-  const [isLoading, setIsLoading] = useState(true)
+export function AuthProvider({ children }: { children: React.ReactNode }) {
+  const [state, setState] = useState<AuthState>({
+    user: null,
+    isLoading: true,
+    error: null,
+  })
 
   useEffect(() => {
-    const loadUser = async () => {
-      try {
-        const storedUser = localStorage.getItem('fasoClass_user')
-        if (storedUser) {
-          const parsedUser: User = JSON.parse(storedUser)
-          setUser(parsedUser)
-        }
-      } catch (error) {
-        console.error('Failed to load user', error)
-      } finally {
-        setIsLoading(false)
-      }
+    // Simuler une restauration de session
+    const storedUser = localStorage.getItem('faso-user')
+    if (storedUser) {
+      setState({ user: JSON.parse(storedUser), isLoading: false, error: null })
+    } else {
+      setState((prev) => ({ ...prev, isLoading: false }))
     }
-
-    loadUser()
   }, [])
 
   const login = async (email: string, password: string) => {
-    setIsLoading(true)
+    setState((prev) => ({ ...prev, isLoading: true, error: null }))
     try {
-      const response = await authService.login({ email, password })
-      
-      // S'assurer que le rôle est du bon type
-      const userData: User = {
-        id: response.user.id,
-        email: response.user.email,
-        firstName: response.user.firstName,
-        lastName: response.user.lastName,
-        role: response.user.role as User['role'], // Conversion du type
-        language: response.user.language,
-        schoolId: response.user.schoolId,
+      // Simuler un appel API
+      await new Promise((resolve) => setTimeout(resolve, 500))
+      const mockUser: User = {
+        id: '1',
+        name: 'Admin Faso',
+        email,
+        role: 'admin',
       }
-      
-      setUser(userData)
-      localStorage.setItem('fasoClass_user', JSON.stringify(userData))
+      localStorage.setItem('faso-user', JSON.stringify(mockUser))
+      setState({ user: mockUser, isLoading: false, error: null })
     } catch (error) {
-      console.error('Login failed', error)
-      throw error
-    } finally {
-      setIsLoading(false)
+      setState((prev) => ({ ...prev, isLoading: false, error: 'Échec de connexion' }))
+      console.error(error);
     }
   }
 
-  const register = async (userData: RegisterFormData) => {
-    setIsLoading(true)
-    try {
-      const response = await authService.register(userData)
-      
-      // S'assurer que le rôle est du bon type
-      const newUser: User = {
-        id: response.user.id,
-        email: response.user.email,
-        firstName: response.user.firstName,
-        lastName: response.user.lastName,
-        role: response.user.role as User['role'], // Conversion du type
-        language: response.user.language,
-        schoolId: response.user.schoolId,
-      }
-      
-      setUser(newUser)
-      localStorage.setItem('fasoClass_user', JSON.stringify(newUser))
-    } catch (error) {
-      console.error('Registration failed', error)
-      throw error
-    } finally {
-      setIsLoading(false)
-    }
+  const logout = () => {
+    localStorage.removeItem('faso-user')
+    setState({ user: null, isLoading: false, error: null })
   }
 
-  const logout = async () => {
-    setIsLoading(true)
-    try {
-      await authService.logout()
-      setUser(null)
-      localStorage.removeItem('fasoClass_user')
-    } catch (error) {
-      console.error('Logout failed', error)
-    } finally {
-      setIsLoading(false)
-    }
-  }
-
-  const value: AuthContextType = {
-    user,
-    login,
-    register,
-    logout,
-    isAuthenticated: !!user,
-    isLoading,
-  }
-
-  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>
+  return (
+    <AuthContext.Provider value={{ ...state, login, logout }}>
+      {children}
+    </AuthContext.Provider>
+  )
 }
