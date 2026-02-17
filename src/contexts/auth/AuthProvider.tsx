@@ -1,38 +1,45 @@
 import { useState } from 'react'
-import type { User, AuthState } from '@/types/types'
+import type { AuthState } from '@/types'
 import { AuthContext } from './AuthContext'
+import { login as loginService } from '@/services/auth/auth-service'
+import { getToken, getUser, clearAuth, setUser as saveUser } from '@/services/auth/token-service'
+
+const getInitialState = (): AuthState => {
+  const token = getToken();
+  const user = getUser();
+  if (token && user) {
+    return { user, isLoading: false, error: null };
+  }
+  return { user: null, isLoading: false, error: null };
+};
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
-  // Initialize state lazily from localStorage – no effect needed
-  const [state, setState] = useState<AuthState>(() => {
-    const storedUser = localStorage.getItem('faso-user')
-    if (storedUser) {
-      return { user: JSON.parse(storedUser), isLoading: false, error: null }
-    }
-    return { user: null, isLoading: false, error: null }
-  })
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const login = async (email: string, password: string) => {
+  const [state, setState] = useState<AuthState>(getInitialState);
+
+  const login = async (username: string, password: string) => {
     setState((prev) => ({ ...prev, isLoading: true, error: null }))
     try {
-      // Simulate API call
-      await new Promise((resolve) => setTimeout(resolve, 500))
-      const mockUser: User = {
-        id: '1',
-        name: 'Admin Faso',
-        email,
-        role: 'admin',
+      const response = await loginService({ username, password })
+      const user = {
+        id: response.id.toString(),
+        name: `${response.firstName} ${response.lastName}`,
+        email: response.email,
+        role: 'admin' as const,
       }
-      localStorage.setItem('faso-user', JSON.stringify(mockUser))
-      setState({ user: mockUser, isLoading: false, error: null })
+      saveUser(user)
+      setState({ user, isLoading: false, error: null })
     } catch (error) {
-      setState((prev) => ({ ...prev, isLoading: false, error: 'Échec de connexion' }))
-      console.error(error)
+      setState((prev) => ({
+        ...prev,
+        isLoading: false,
+        error: 'Échec de connexion',
+      }))
+      throw error
     }
   }
 
   const logout = () => {
-    localStorage.removeItem('faso-user')
+    clearAuth()
     setState({ user: null, isLoading: false, error: null })
   }
 
