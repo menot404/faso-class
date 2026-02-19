@@ -25,7 +25,7 @@ import {
 import { ClassForm } from './ClassForm'
 import { ClassRoster } from './ClassRoster'
 import { useTranslation } from 'react-i18next'
-import { usePermissions } from '@/hooks/usePermissions'
+import { usePermissions } from '../hooks/usePermissions'
 
 interface ClassCardProps {
   classData: Class
