@@ -3,56 +3,55 @@ import jsPDF from 'jspdf'
 import autoTable from 'jspdf-autotable'
 import type { Grade } from '@/types/grade'
 
-/**
- * Exporte une liste de notes au format CSV
- */
+// Définir le type des données pour l'export CSV
+type GradeExportData = {
+  id: string
+  studentId: number
+  classId: string
+  subject: string
+  value: number
+  coefficient: number
+  date: string
+  semester: number
+  academicYear: string
+}
+
 export function exportGradesToCSV(grades: Grade[], filename: string = 'notes') {
-  const data = grades.map((g) => ({
-    ID: g.id,
-    'Étudiant ID': g.studentId,
-    'Classe ID': g.classId,
-    Matière: g.subject,
-    Note: g.value,
-    Coefficient: g.coefficient,
-    Date: new Date(g.date).toLocaleDateString('fr-FR'),
-    Semestre: g.semester,
-    'Année scolaire': g.academicYear,
+  // Typer explicitement les données
+  const data: GradeExportData[] = grades.map(g => ({
+    id: g.id,
+    studentId: g.studentId,
+    classId: g.classId,
+    subject: g.subject,
+    value: g.value,
+    coefficient: g.coefficient,
+    date: g.date,
+    semester: g.semester,
+    academicYear: g.academicYear,
   }))
 
-  const columns = [
-    { key: 'ID', label: 'ID' },
-    { key: 'Étudiant ID', label: 'Étudiant ID' },
-    { key: 'Classe ID', label: 'Classe ID' },
-    { key: 'Matière', label: 'Matière' },
-    { key: 'Note', label: 'Note' },
-    { key: 'Coefficient', label: 'Coefficient' },
-    { key: 'Date', label: 'Date' },
-    { key: 'Semestre', label: 'Semestre' },
-    { key: 'Année scolaire', label: 'Année scolaire' },
+  // Typer les colonnes avec keyof GradeExportData
+  const columns: { key: keyof GradeExportData; label: string }[] = [
+    { key: 'id', label: 'ID' },
+    { key: 'studentId', label: 'Étudiant ID' },
+    { key: 'classId', label: 'Classe ID' },
+    { key: 'subject', label: 'Matière' },
+    { key: 'value', label: 'Note' },
+    { key: 'coefficient', label: 'Coefficient' },
+    { key: 'date', label: 'Date' },
+    { key: 'semester', label: 'Semestre' },
+    { key: 'academicYear', label: 'Année scolaire' },
   ]
 
   exportToCSV(data, filename, columns)
 }
 
-/**
- * Exporte une liste de notes au format PDF
- */
 export function exportGradesToPDF(grades: Grade[], title: string = 'Liste des notes') {
   const doc = new jsPDF()
   doc.text(title, 14, 10)
 
-  const tableColumn = [
-    'ID',
-    'Étudiant ID',
-    'Classe ID',
-    'Matière',
-    'Note',
-    'Coeff.',
-    'Date',
-    'Semestre',
-    'Année',
-  ]
-  const tableRows = grades.map((g) => [
+  const tableColumn = ['ID', 'Étudiant', 'Classe', 'Matière', 'Note', 'Coeff.', 'Date']
+  const tableRows = grades.map(g => [
     g.id,
     g.studentId.toString(),
     g.classId,
@@ -60,16 +59,12 @@ export function exportGradesToPDF(grades: Grade[], title: string = 'Liste des no
     g.value.toString(),
     g.coefficient.toString(),
     new Date(g.date).toLocaleDateString('fr-FR'),
-    g.semester.toString(),
-    g.academicYear,
   ])
 
   autoTable(doc, {
     head: [tableColumn],
     body: tableRows,
     startY: 20,
-    styles: { fontSize: 8 },
-    headStyles: { fillColor: [41, 128, 185] },
   })
 
   doc.save('notes.pdf')
