@@ -7,7 +7,7 @@ export interface ReportTemplate {
   type: 'students' | 'grades' | 'classes' | 'attendance'
   format: ReportFormat
   columns: string[]
-  filters?: Record<string, any>
+  filters?: Record<string, unknown>
 }
 
 export interface Report {
