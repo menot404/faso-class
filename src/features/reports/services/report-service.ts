@@ -1,4 +1,4 @@
-import type { Report, ReportTemplate, ReportFilters, ReportFormat } from '@/types/report'
+import type { Report, ReportTemplate, ReportFormat } from '@/types/report'
 import { getStudents } from '@/services/api/students'
 import { fetchGrades } from '@/features/grades/services/grade-service'
 import { fetchClasses } from '@/features/classes/services/class-service'
@@ -34,10 +34,10 @@ const initializeReports = () => {
 }
 initializeReports()
 
-export const fetchReports = async (filters?: ReportFilters): Promise<Report[]> => {
+export const fetchReports = async (): Promise<Report[]> => {
   await new Promise(resolve => setTimeout(resolve, 300))
   const stored = localStorage.getItem(STORAGE_KEY)
-  let reports: Report[] = stored ? JSON.parse(stored) : defaultReports
+  const reports: Report[] = stored ? JSON.parse(stored) : defaultReports
   // filtre simplifié non implémenté
   return reports.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
 }
@@ -48,27 +48,26 @@ export const fetchTemplates = async (): Promise<ReportTemplate[]> => {
 
 export const generateReport = async (
   templateId: string,
-  format: ReportFormat,
-  _customFilters?: any
+  format: ReportFormat
 ): Promise<Report> => {
   const templates = await fetchTemplates()
   const template = templates.find(t => t.id === templateId)
   if (!template) throw new Error('Template non trouvé')
 
   // Récupérer les données selon le type
-  let data: any[] = []
+  let data: Array<Record<string, unknown>> = []
   if (template.type === 'students') {
     const studentsRes = await getStudents({ page: 1, limit: 1000 })
-    data = studentsRes.users
+    data = studentsRes.users.map(student => ({ ...student })) as Array<Record<string, unknown>>
   } else if (template.type === 'grades') {
     const grades = await fetchGrades()
     data = grades.map(g => ({
       ...g,
       studentName: `Élève ${g.studentId}`,
       className: `Classe ${g.classId}`,
-    }))
+    })) as Array<Record<string, unknown>>
   } else if (template.type === 'classes') {
-    data = await fetchClasses()
+    data = (await fetchClasses()).map(cls => ({ ...cls })) as Array<Record<string, unknown>>
   }
 
   let url = ''

@@ -30,7 +30,7 @@ export function ReportBuilder({ open, onClose }: ReportBuilderProps) {
   const { t } = useTranslation()
   const [selectedTemplate, setSelectedTemplate] = useState<string>('')
   const [selectedFormat, setSelectedFormat] = useState<ReportFormat>('pdf')
-  const { data: templates, isLoading } = useTemplates()
+  const { data: templates } = useTemplates()
   const generateMutation = useGenerateReport()
 
   const handleGenerate = () => {

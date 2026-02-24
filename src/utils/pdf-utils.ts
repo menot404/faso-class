@@ -56,7 +56,7 @@ export const exportClassesToPDF = (classes: Class[], title: string = 'Liste des 
  * @returns Promise contenant l'URL du blob (pour téléchargement ou affichage)
  */
 export async function generatePDF(
-  data: Record<string, any>[],
+  data: Record<string, unknown>[],
   columns: string[],
   title: string
 ): Promise<string> {

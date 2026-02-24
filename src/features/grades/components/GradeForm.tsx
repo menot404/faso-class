@@ -98,7 +98,7 @@ const resolver: Resolver<GradeFormValues> = zodResolver(gradeSchema) as Resolver
         { onSuccess: () => onClose() }
       )
     } else {
-      createMutation.mutate(values as any, { onSuccess: () => onClose() })
+      createMutation.mutate(values, { onSuccess: () => onClose() })
     }
   }
 

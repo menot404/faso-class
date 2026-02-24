@@ -4,9 +4,11 @@ import { Button } from '@/components/ui/button'
 import { Upload } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'sonner'
-import Papa from 'papaparse'
+import * as Papa from 'papaparse'
 import { useCreateGrade } from '../hooks/useGradeMutations'
 import type { Grade } from '../types'
+
+// Example implementation of parse function
 
 export function GradeImport() {
   const { t } = useTranslation()
@@ -42,14 +44,18 @@ export function GradeImport() {
             date: grade.date || new Date().toISOString(),
             semester: Number(grade.semester) || 1,
             academicYear: grade.academicYear || '2025-2026',
-          } as any)
+          } as Grade);
         })
 
         toast.success(t(`${validGrades.length} notes importées`))
         setIsUploading(false)
       },
       error: (error: unknown) => {
-        toast.error(`${t(`Erreur lors de l'import : ${(error as any).message}`)}`)
+        const errorMessage =
+          typeof error === 'object' && error !== null && 'message' in error
+            ? String((error as { message: unknown }).message)
+            : t('Erreur inconnue')
+        toast.error(`${t(`Erreur lors de l'import : ${errorMessage}`)}`)
         setIsUploading(false)
       },
     })

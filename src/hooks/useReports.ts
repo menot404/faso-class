@@ -10,7 +10,7 @@ export const TEMPLATES_QUERY_KEY = 'report-templates'
 export const useReports = (filters?: ReportFilters) => {
   return useQuery({
     queryKey: [REPORTS_QUERY_KEY, filters],
-    queryFn: () => fetchReports(filters),
+    queryFn: () => fetchReports(),
   })
 }
 
@@ -25,8 +25,8 @@ export const useGenerateReport = () => {
   const queryClient = useQueryClient()
   const { t } = useTranslation()
   return useMutation({
-    mutationFn: ({ templateId, format, filters }: { templateId: string; format: ReportFormat; filters?: any }) =>
-      generateReport(templateId, format, filters),
+    mutationFn: ({ templateId, format }: { templateId: string; format: ReportFormat }) =>
+      generateReport(templateId, format),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: [REPORTS_QUERY_KEY] })
       toast.success(t('Rapport généré avec succès'))
