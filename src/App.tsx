@@ -1,16 +1,16 @@
-import './App.css'
-import { ThemeProvider } from './contexts/theme/ThemeProvider'
-import { ModeToggle } from './components/layout/ModeToggle'
+import { RouterProvider } from "react-router-dom"
+import { router } from "../app/routes"
+import { Toaster } from "sonner"
+import { AnimatePresence } from "framer-motion"
+
 function App() {
 
   return (
     <>
-      <ThemeProvider  defaultTheme="light" storageKey="vite-ui-theme">
-        <div>
-          <ModeToggle/>
-          <h1>FasoClass</h1>
-        </div>
-      </ThemeProvider>
+      <AnimatePresence mode="wait">
+        <RouterProvider router={router} />
+      </AnimatePresence>
+      <Toaster richColors position="top-right" />
     </>
   )
 }
