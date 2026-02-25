@@ -9,7 +9,7 @@ import { Button } from '@/components/ui/button'
 import { Plus } from 'lucide-react'
 import { AttendanceForm } from './AttendanceForm'
 
-export default function AttendancePage() {
+const AttendancePage = ()=> {
   const { t } = useTranslation()
   const [isFormOpen, setIsFormOpen] = useState(false)
 
@@ -44,3 +44,5 @@ export default function AttendancePage() {
     </PageContainer>
   )
 }
+
+export default AttendancePage;
