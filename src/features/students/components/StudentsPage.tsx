@@ -8,7 +8,7 @@ import { StudentForm } from './StudentForm'
 import { useTranslation } from 'react-i18next'
 import type { Student } from '@/types'
 
-export default function StudentsPage() {
+const StudentsPage = () => {
   const { t } = useTranslation()
   const [isFormOpen, setIsFormOpen] = useState(false)
   const [editingStudent, setEditingStudent] = useState<Student | null>(null)
@@ -44,3 +44,5 @@ export default function StudentsPage() {
     </PageContainer>
   )
 }
+
+export default StudentsPage;

@@ -11,7 +11,7 @@ import { useTranslation } from 'react-i18next'
 import { Badge } from '@/components/ui/badge'
 import { Download } from 'lucide-react'
 
-export default function ReportsPage() {
+const ReportsPage = () => {
   const { t, i18n } = useTranslation()
   const [isBuilderOpen, setIsBuilderOpen] = useState(false)
   const { data: reports, isLoading } = useReports()
@@ -71,3 +71,5 @@ export default function ReportsPage() {
     </PageContainer>
   )
 }
+
+export default ReportsPage;

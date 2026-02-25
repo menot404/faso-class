@@ -12,7 +12,7 @@ import { useTranslation } from 'react-i18next'
 import { Input } from '@/components/ui/input'
 import { useDebounce } from '@/hooks/useDebounce'
 
-export default function ClassesPage() {
+const ClassesPage = () => {
   const { t } = useTranslation()
   const [search, setSearch] = useState('')
   const debouncedSearch = useDebounce(search, 500)
@@ -62,3 +62,5 @@ export default function ClassesPage() {
     </PageContainer>
   )
 }
+
+export default ClassesPage;

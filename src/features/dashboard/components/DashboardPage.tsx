@@ -6,7 +6,7 @@ import { useDashboard } from '../hooks/useDashboard'
 import { LoadingSpinner } from '@/components/shared/LoadingSpinner'
 import { useTranslation } from 'react-i18next'
 
-export default function DashboardPage() {
+const DashboardPage = () => {
   const { t } = useTranslation()
   const { totalStudents, totalClasses, activeClasses, classes, isLoading } =
     useDashboard()
@@ -36,3 +36,5 @@ export default function DashboardPage() {
     </PageContainer>
   )
 }
+
+export default DashboardPage;

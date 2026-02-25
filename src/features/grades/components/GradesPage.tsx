@@ -13,7 +13,7 @@ import { exportGradesToCSV, exportGradesToPDF } from '@/utils/export-utils'
 import { useGrades } from '../hooks/useGrades'
 import type { Grade } from '../types'
 
-export default function GradesPage() {
+const GradesPage = () => {
   const { t } = useTranslation()
   const [isFormOpen, setIsFormOpen] = useState(false)
   const [editingGrade, setEditingGrade] = useState<Grade | null>(null)
@@ -73,3 +73,6 @@ export default function GradesPage() {
     </PageContainer>
   )
 }
+
+
+export default GradesPage;
