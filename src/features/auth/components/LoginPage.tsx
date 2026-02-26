@@ -45,7 +45,7 @@ export function LoginPage() {
               <Label htmlFor="username">{t("Nom d'utilisateur")}</Label>
               <Input
                 id="username"
-                value={username}
+                value={username.trim()}
                 onChange={(e) => setUsername(e.target.value)}
                 placeholder="kminchelle"
                 required
@@ -56,7 +56,7 @@ export function LoginPage() {
               <Input
                 id="password"
                 type="password"
-                value={password}
+                value={password.trim()}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="0lelplR"
                 required
