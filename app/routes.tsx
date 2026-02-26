@@ -19,7 +19,7 @@ const StudentsPage = withAnimation(lazy(() => import('@/features/students/compon
 const ClassesPage = withAnimation(lazy(() => import('@/features/classes/components/ClassesPage')))
 const GradesPage = withAnimation(lazy(() => import('@/features/grades/components/GradesPage')))
 const ReportsPage = withAnimation(lazy(() => import('@/features/reports/components/ReportsPage')))
-//const SettingsPage = withAnimation(lazy(() => import('@/features/settings/components/settings-page')))
+const SettingsPage = withAnimation(lazy(() => import('@/features/settings/components/SettingsPage')))
 const AttendancePage = withAnimation(lazy(() => import('@/features/attendance/components/AttendancePage')))
 
 export const router = createBrowserRouter([
@@ -39,7 +39,7 @@ export const router = createBrowserRouter([
           { path: 'grades', element: <GradesPage /> },
           { path: 'reports', element: <ReportsPage /> },
           { path: 'attendance', element: <AttendancePage /> },
-         // { path: 'settings', element: <SettingsPage /> },
+          { path: 'settings', element: <SettingsPage /> },
         ],
       },
     ],
