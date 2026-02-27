@@ -21,7 +21,7 @@ const GradesPage = withAnimation(lazy(() => import('@/features/grades/components
 const ReportsPage = withAnimation(lazy(() => import('@/features/reports/components/ReportsPage')))
 const SettingsPage = withAnimation(lazy(() => import('@/features/settings/components/SettingsPage')))
 const AttendancePage = withAnimation(lazy(() => import('@/features/attendance/components/AttendancePage')))
-
+const NotFoundPage = withAnimation(lazy(() => import('@/features/not-found/components/NotFoundPage')))
 export const router = createBrowserRouter([
   {
     path: '/login',
@@ -40,6 +40,8 @@ export const router = createBrowserRouter([
           { path: 'reports', element: <ReportsPage /> },
           { path: 'attendance', element: <AttendancePage /> },
           { path: 'settings', element: <SettingsPage /> },
+          // Route catch-all pour les pages non trouvées
+          { path: '*', element: <NotFoundPage /> },
         ],
       },
     ],
