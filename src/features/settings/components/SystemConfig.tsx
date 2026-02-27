@@ -26,7 +26,6 @@ import { useTranslation } from 'react-i18next'
 import { toast } from 'sonner'
 import { Separator } from '@/components/ui/separator'
 import type { SystemConfig } from '../types'
-import { useTheme } from 'next-themes'
 
 const systemSchema = z.object({
   academicYear: z.string().min(1, 'Année scolaire requise'),
@@ -40,13 +39,15 @@ export function SystemConfig() {
   const {
     system,
     updateSystem,
+    theme,
+    setTheme,
     language,
     setLanguage,
     notifications,
     setNotifications,
   } = useSettings()
 
-  const { setTheme } = useTheme()
+  
 
   const form = useForm({
     resolver: zodResolver(systemSchema),
@@ -152,14 +153,14 @@ export function SystemConfig() {
                 {t('Choisissez l\'apparence de l\'application')}
               </p>
             </div>
-            <Select>
+            <Select value={theme} onValueChange={setTheme}>
               <SelectTrigger className="w-45">
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="light" onClick={() => setTheme("light")}>{t('Clair')}</SelectItem>
-                <SelectItem value="dark" onClick={() => setTheme("dark")}>{t('Sombre')}</SelectItem>
-                <SelectItem value="system" onClick={() => setTheme("system")}>{t('Système')}</SelectItem>
+                <SelectItem value="light">{t('Clair')}</SelectItem>
+                <SelectItem value="dark">{t('Sombre')}</SelectItem>
+                <SelectItem value="system">{t('Système')}</SelectItem>
               </SelectContent>
             </Select>
           </div>
