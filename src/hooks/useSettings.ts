@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import type { SchoolInfo, SystemConfig } from '@/features/settings/types'
-import { useThemeStore } from '@/store/theme-store'
 import { useTranslation } from 'react-i18next'
+import { useTheme } from './useTheme'
 
 const defaultSchool: SchoolInfo = {
   name: 'École FasoClass',
@@ -18,7 +18,7 @@ const defaultSystem: SystemConfig = {
 }
 
 export const useSettings = () => {
-  const { theme, setTheme } = useThemeStore()
+  const { theme, setTheme } = useTheme()
   const { i18n } = useTranslation()
   const [school, setSchool] = useState<SchoolInfo>(() => {
     const stored = localStorage.getItem('faso-school')
