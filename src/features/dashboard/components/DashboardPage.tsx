@@ -4,7 +4,7 @@ import { EnrollmentChart } from './EnrollmentChart'
 import { RecentActivities } from './RecentActivities'
 import { useDashboard } from '../hooks/useDashboard'
 import { LoadingSpinner } from '@/components/shared/LoadingSpinner'
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from '@/hooks/useTranslation'
 
 const DashboardPage = () => {
   const { t } = useTranslation()
@@ -21,7 +21,7 @@ const DashboardPage = () => {
 
   return (
     <PageContainer>
-      <h1 className="mb-6 text-2xl font-bold">{t('Tableau de bord')}</h1>
+      <h1 className="mb-6 text-2xl font-bold">{t('navigation.dashboard')}</h1>
 
       <KpiCards
         totalStudents={totalStudents}

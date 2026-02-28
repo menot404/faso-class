@@ -21,7 +21,7 @@ i18n
     detection: {
       order: ['localStorage', 'navigator'],
       caches: ['localStorage'],
-      lookupLocalStorage: 'i18nextLng',
+      lookupLocalStorage: 'preferredLanguage',
     },
     
     interpolation: {
@@ -29,7 +29,7 @@ i18n
     },
     
     react: {
-      useSuspense: true,
+      useSuspense: false,
     },
   });
 

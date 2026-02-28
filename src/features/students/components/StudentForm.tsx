@@ -22,7 +22,7 @@ import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { useCreateStudent, useUpdateStudent } from '../hooks/useStudentMutations'
 import type { Student } from '@/types/student'
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from '@/hooks/useTranslation'
 
 interface StudentFormProps {
   open: boolean

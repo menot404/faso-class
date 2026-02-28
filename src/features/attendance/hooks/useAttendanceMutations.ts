@@ -2,7 +2,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { createAttendance, updateAttendance, deleteAttendance } from '../services/attendance-service'
 import { ATTENDANCE_QUERY_KEY } from './useAttendance'
 import { toast } from 'sonner'
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from '@/hooks/useTranslation'
 import type { Attendance } from '../types'
 
 export const useCreateAttendance = () => {

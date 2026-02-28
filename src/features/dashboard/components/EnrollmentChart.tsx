@@ -9,7 +9,7 @@ import {
   Legend,
 } from 'recharts'
 import type { Class } from '@/types/class'
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from '@/hooks/useTranslation'
 
 interface EnrollmentChartProps {
   classes: Class[]

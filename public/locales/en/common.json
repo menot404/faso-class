@@ -6,7 +6,8 @@
     "loading": "Loading...",
     "saving": "Saving...",
     "deleting": "Deleting...",
-    "processing": "Processing..."
+    "processing": "Processing...",
+    "count": "My count"
   },
   "navigation": {
     "dashboard": "Dashboard",

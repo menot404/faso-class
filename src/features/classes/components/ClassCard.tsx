@@ -24,7 +24,7 @@ import {
 } from '@/components/ui/alert-dialog'
 import { ClassForm } from './ClassForm'
 import { ClassRoster } from './ClassRoster'
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from '@/hooks/useTranslation'
 import { usePermissions } from '../hooks/usePermissions'
 
 interface ClassCardProps {

@@ -1,8 +1,8 @@
 // src/hooks/useTranslation.ts
 import { useTranslation as useI18nTranslation } from 'react-i18next';
 
-export function useTranslation() {
-  const { t, i18n } = useI18nTranslation();
+export function useTranslation(ns?: string | string[]) {
+  const { t, i18n } = useI18nTranslation(ns);
 
   const changeLanguage = (lang: string) => {
     i18n.changeLanguage(lang);

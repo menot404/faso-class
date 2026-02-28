@@ -11,15 +11,15 @@ import {
   LogOut,
 } from 'lucide-react'
 import { useAuth } from '@/hooks/useAuth'
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from '@/hooks/useTranslation'
 
 const navItems = [
-  { to: '/', label: 'Dashboard', icon: LayoutDashboard },
-  { to: '/students', label: 'Étudiants', icon: Users },
-  { to: '/classes', label: 'Classes', icon: GraduationCap },
-  { to: '/grades', label: 'Notes', icon: BookOpen },
-  { to: '/reports', label: 'Rapports', icon: FileText },
-  { to: '/settings', label: 'Paramètres', icon: Settings },
+  { to: '/', label: 'navigation.dashboard', icon: LayoutDashboard },
+  { to: '/students', label: 'navigation.students', icon: Users },
+  { to: '/classes', label: 'navigation.classes', icon: GraduationCap },
+  { to: '/grades', label: 'navigation.grades', icon: BookOpen },
+  { to: '/reports', label: 'navigation.reports', icon: FileText },
+  { to: '/settings', label: 'navigation.settings', icon: Settings },
 ]
 
 export function AppSidebar() {
@@ -59,7 +59,7 @@ export function AppSidebar() {
           onClick={() => logout()}
         >
           <LogOut className="h-4 w-4" />
-          {t('Déconnexion')}
+          {t('buttons.logout')}
         </Button>
       </div>
     </aside>

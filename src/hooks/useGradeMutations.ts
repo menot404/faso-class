@@ -2,7 +2,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { createGrade, updateGrade, deleteGrade } from '@/features/grades/services/grade-service'
 import { GRADES_QUERY_KEY } from './useGrades'
 import { toast } from 'sonner'
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from '@/hooks/useTranslation'
 import type { Grade } from '@/types/grade'
 
 export const useCreateGrade = () => {

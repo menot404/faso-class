@@ -3,7 +3,7 @@ import { createStudent, updateStudent, deleteStudent } from '../services/student
 import type { Student } from '@/types/student'
 import { STUDENTS_QUERY_KEY } from './useStudents'
 import { toast } from 'sonner'
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from '@/hooks/useTranslation'
 
 export const useCreateStudent = () => {
   const queryClient = useQueryClient()

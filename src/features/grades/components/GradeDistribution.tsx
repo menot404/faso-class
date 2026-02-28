@@ -9,7 +9,7 @@ import {
   Legend,
 } from 'recharts'
 import { useGrades } from '../hooks/useGrades'
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from '@/hooks/useTranslation'
 import { Skeleton } from '@/components/ui/skeleton'
 
 export function GradeDistribution() {

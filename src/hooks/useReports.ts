@@ -2,7 +2,7 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { fetchReports, fetchTemplates, generateReport } from '@/features/reports/services/report-service'
 import type { ReportFilters, ReportFormat } from '@/features/reports/types'
 import { toast } from 'sonner'
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from '@/hooks/useTranslation'
 
 export const REPORTS_QUERY_KEY = 'reports'
 export const TEMPLATES_QUERY_KEY = 'report-templates'

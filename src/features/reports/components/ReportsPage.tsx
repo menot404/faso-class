@@ -7,7 +7,7 @@ import { useReports } from '../hooks/useReports'
 import { ReportBuilder } from './ReportBuilder'
 import { format } from 'date-fns'
 import { fr } from 'date-fns/locale'
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from '@/hooks/useTranslation'
 import { Badge } from '@/components/ui/badge'
 import { Download } from 'lucide-react'
 

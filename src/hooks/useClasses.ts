@@ -10,7 +10,7 @@ import {
 } from '../features/classes/services/class-service'
 import type { Class, ClassFilters } from '@/types/class'
 import { toast } from 'sonner'
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from '@/hooks/useTranslation'
 
 export const CLASSES_QUERY_KEY = 'classes'
 
