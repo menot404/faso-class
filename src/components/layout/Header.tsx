@@ -11,7 +11,7 @@ import {
 import { Menu, Moon, Sun } from 'lucide-react'
 import { useAuth } from '@/hooks/useAuth' 
 import { useTheme } from '@/hooks/useTheme'
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from '@/hooks/useTranslation'
 
 export function Header() {
   const { user } = useAuth()

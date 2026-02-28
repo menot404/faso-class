@@ -5,7 +5,7 @@ import { StudentFilters } from './StudentFilters'
 import { Button } from '@/components/ui/button'
 import { Plus } from 'lucide-react'
 import { StudentForm } from './StudentForm'
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from '@/hooks/useTranslation'
 import type { Student } from '@/types'
 
 const StudentsPage = () => {

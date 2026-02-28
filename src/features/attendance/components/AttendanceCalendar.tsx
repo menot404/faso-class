@@ -5,7 +5,7 @@ import { ChevronLeft, ChevronRight } from 'lucide-react'
 import { format, addMonths, subMonths, startOfMonth, endOfMonth, eachDayOfInterval, isSameMonth, isSameDay } from 'date-fns'
 import { fr } from 'date-fns/locale'
 import { useAttendanceByDate } from '../hooks/useAttendance'
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from '@/hooks/useTranslation'
 
 export function AttendanceCalendar() {
   const { t, i18n } = useTranslation()

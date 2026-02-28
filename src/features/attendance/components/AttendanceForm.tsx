@@ -30,7 +30,7 @@ import {
 import { useCreateAttendance } from '../hooks/useAttendanceMutations'
 import { useStudents } from '@/features/students/hooks/useStudents'
 import { useClasses } from '@/features/classes/hooks/useClasses'
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from '@/hooks/useTranslation'
 
 const attendanceSchema = z.object({
   studentId: z.coerce.number().int().positive('Étudiant requis'),

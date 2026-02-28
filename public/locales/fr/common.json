@@ -6,7 +6,8 @@
     "loading": "Chargement...",
     "saving": "Enregistrement...",
     "deleting": "Suppression...",
-    "processing": "Traitement en cours..."
+    "processing": "Traitement en cours...",
+    "count": "Mon compte"
   },
   "navigation": {
     "dashboard": "Tableau de bord",

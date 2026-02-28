@@ -32,7 +32,7 @@ import { useCreateGrade, useUpdateGrade } from '../hooks/useGradeMutations'
 import type { Grade } from '../types'
 import { useStudents } from '@/features/students/hooks/useStudents'
 import { useClasses } from '@/hooks/useClasses'
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from '@/hooks/useTranslation'
 
 const gradeSchema = z.object({
   studentId: z.coerce.number().int().positive('Étudiant requis'),

@@ -18,7 +18,7 @@ import {
 import { Label } from '@/components/ui/label'
 import { useTemplates, useGenerateReport } from '../hooks/useReports'
 import type { ReportFormat } from '../types'
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from '@/hooks/useTranslation'
 import { Loader2 } from 'lucide-react'
 
 interface ReportBuilderProps {

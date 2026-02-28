@@ -3,7 +3,7 @@ import { SchoolSettings } from './SchoolSettings'
 import { UserManagement } from './UserManagement'
 import { SystemConfig } from './SystemConfig'
 import { PageContainer } from '@/components/shared/PageContainer'
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from '@/hooks/useTranslation'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 
 export default function SettingsPage() {

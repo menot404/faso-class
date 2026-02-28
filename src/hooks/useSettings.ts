@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import type { SchoolInfo, SystemConfig } from '@/features/settings/types'
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from '@/hooks/useTranslation'
 import { useTheme } from './useTheme'
 
 const defaultSchool: SchoolInfo = {

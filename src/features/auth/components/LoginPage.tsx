@@ -12,7 +12,7 @@ import { useAuth } from '@/hooks/useAuth'
 import { useState } from 'react'
 import { Navigate } from 'react-router-dom'
 import { toast } from 'sonner'
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from '@/hooks/useTranslation'
 
 export function LoginPage() {
   const { t } = useTranslation()

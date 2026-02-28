@@ -29,7 +29,7 @@ import {
 } from '@/components/ui/select'
 import { useCreateClass, useUpdateClass } from '../hooks/useClasses'
 import type { Class } from '../types'
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from '@/hooks/useTranslation'
 
 const classSchema = z.object({
   name: z.string().min(1, 'Nom requis'),

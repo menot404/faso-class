@@ -1,7 +1,7 @@
 import { useAttendance } from '../hooks/useAttendance'
 import { computeAttendanceStats } from '../services/attendance-service'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from '@/hooks/useTranslation'
 import { Skeleton } from '@/components/ui/skeleton'
 
 export function AttendanceStats() {
