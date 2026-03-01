@@ -1,9 +1,8 @@
-import { useMemo, useState } from 'react'
+import { useMemo, useState, useEffect } from 'react'
 import type { ColumnDef } from '@tanstack/react-table'
 import { DataTable } from '@/components/shared/DataTable'
 import { useStudents } from '../hooks/useStudents'
 import type { Student } from '@/types/student'
-import {  } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Edit, Trash2 } from 'lucide-react'
 import { useDeleteStudent } from '../hooks/useStudentMutations'
@@ -22,19 +21,24 @@ import { useTranslation } from '@/hooks/useTranslation'
 
 interface StudentTableProps {
   onEdit: (student: Student) => void
+  search: string
 }
 
-export function StudentTable({ onEdit }: StudentTableProps) {
+export function StudentTable({ onEdit, search }: StudentTableProps) {
   const { t } = useTranslation()
   const [pagination, setPagination] = useState({ pageIndex: 0, pageSize: 10 })
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [search, setSearch] = useState('')
   const [deleteId, setDeleteId] = useState<number | null>(null)
+
+  // Réinitialiser la page à 0 quand la recherche change
+  useEffect(() => {
+  //eslint-disable-next-line react-hooks/exhaustive-deps
+    setPagination(prev => ({ ...prev, pageIndex: 0 }))
+  }, [search])
 
   const { data, isLoading } = useStudents({
     page: pagination.pageIndex + 1,
     limit: pagination.pageSize,
-    search,
+    search, // utilisation de la prop
   })
 
   const deleteMutation = useDeleteStudent()
