@@ -1,22 +1,14 @@
 import { Input } from '@/components/ui/input'
 import { Search } from 'lucide-react'
-import { useDebounce } from '@/hooks/useDebounce'
-import { useEffect, useState } from 'react'
 import { useTranslation } from '@/hooks/useTranslation'
 
-export function StudentFilters() {
-  const { t } = useTranslation()
-  const [search, setSearch] = useState('')
-  const debouncedSearch = useDebounce(search, 500)
+interface StudentFiltersProps {
+  value: string
+  onChange: (value: string) => void
+}
 
-  useEffect(() => {
-    // Ici on pourrait mettre à jour le store de filtres (Zustand, Context, ou query params)
-    // Pour l'exemple, on utilise un événement custom ou on modifie l'URL
-    // On va stocker dans localStorage pour simplifier
-    localStorage.setItem('students-search', debouncedSearch)
-    // Déclencher un rechargement du tableau (via un event)
-    window.dispatchEvent(new Event('students-filters-change'))
-  }, [debouncedSearch])
+export function StudentFilters({ value, onChange }: StudentFiltersProps) {
+  const { t } = useTranslation()
 
   return (
     <div className="mb-4 flex items-center gap-4">
@@ -25,8 +17,8 @@ export function StudentFilters() {
         <Input
           placeholder={t('Rechercher un étudiant...')}
           className="pl-8"
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
+          value={value}
+          onChange={(e) => onChange(e.target.value)}
         />
       </div>
     </div>

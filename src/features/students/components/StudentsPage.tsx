@@ -6,10 +6,14 @@ import { Button } from '@/components/ui/button'
 import { Plus } from 'lucide-react'
 import { StudentForm } from './StudentForm'
 import { useTranslation } from '@/hooks/useTranslation'
+import { useDebounce } from '@/hooks/useDebounce'
 import type { Student } from '@/types'
 
 const StudentsPage = () => {
   const { t } = useTranslation()
+  const [search, setSearch] = useState('')
+  const debouncedSearch = useDebounce(search, 500)
+
   const [isFormOpen, setIsFormOpen] = useState(false)
   const [editingStudent, setEditingStudent] = useState<Student | null>(null)
 
@@ -33,8 +37,8 @@ const StudentsPage = () => {
         </Button>
       </div>
 
-      <StudentFilters />
-      <StudentTable onEdit={handleEdit} />
+      <StudentFilters value={search} onChange={setSearch} />
+      <StudentTable onEdit={handleEdit} search={debouncedSearch} />
 
       <StudentForm
         open={isFormOpen}
@@ -45,4 +49,4 @@ const StudentsPage = () => {
   )
 }
 
-export default StudentsPage;
+export default StudentsPage
