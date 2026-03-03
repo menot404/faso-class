@@ -9,6 +9,7 @@ import {
   FileText,
   Settings,
   LogOut,
+  ClipboardCheck
 } from 'lucide-react'
 import { useAuth } from '@/hooks/useAuth'
 import { useTranslation } from '@/hooks/useTranslation'
@@ -19,6 +20,7 @@ const navItems = [
   { to: '/classes', label: 'navigation.classes', icon: GraduationCap },
   { to: '/grades', label: 'navigation.grades', icon: BookOpen },
   { to: '/reports', label: 'navigation.reports', icon: FileText },
+  { to: '/attendance', label: 'navigation.attendance', icon: ClipboardCheck },
   { to: '/settings', label: 'navigation.settings', icon: Settings },
 ]
 
