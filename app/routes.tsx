@@ -5,12 +5,16 @@ import { LoginPage } from '@/features/auth/components/LoginPage'
 import { lazy, Suspense } from 'react'
 import { LoadingSpinner } from '@/components/shared/LoadingSpinner'
 import { AnimatedPage } from '@/components/shared/AnimatedPage'
+import { ErrorBoundary } from "@/components/shared/ErrorBoundary"
+
 // Wrapper pour Suspense + AnimatedPage
 const withAnimation = <P extends object>(Component: React.ComponentType<P>) => (props: P) => (
   <Suspense fallback={<LoadingSpinner />}>
-    <AnimatedPage>
-      <Component {...props} />
-    </AnimatedPage>
+    <ErrorBoundary>
+      <AnimatedPage>
+        <Component {...props} />
+      </AnimatedPage>
+    </ErrorBoundary>
   </Suspense>
 )
 
