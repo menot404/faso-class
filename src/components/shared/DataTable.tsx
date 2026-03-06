@@ -11,6 +11,7 @@ import type {
   ColumnFiltersState,
   PaginationState,
   OnChangeFn,
+  RowSelectionState,
 } from '@tanstack/react-table'
 import {
   Table,
@@ -35,6 +36,8 @@ interface DataTableProps<TData, TValue> {
   onSortingChange?: OnChangeFn<SortingState>
   columnFilters?: ColumnFiltersState
   onColumnFiltersChange?: OnChangeFn<ColumnFiltersState>
+  rowSelection?: RowSelectionState
+  onRowSelectionChange?: OnChangeFn<RowSelectionState>
   isLoading?: boolean
 }
 
@@ -49,6 +52,8 @@ export function DataTable<TData, TValue>({
   onSortingChange,
   columnFilters,
   onColumnFiltersChange,
+  rowSelection,
+  onRowSelectionChange,
   isLoading,
 }: DataTableProps<TData, TValue>) {
   // eslint-disable-next-line react-hooks/incompatible-library
@@ -60,16 +65,19 @@ export function DataTable<TData, TValue>({
       pagination,
       sorting,
       columnFilters,
+      rowSelection,
     },
     onPaginationChange,
     onSortingChange,
     onColumnFiltersChange,
+    onRowSelectionChange,
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
     manualPagination: true,
     manualSorting: true,
     manualFiltering: true,
+    enableRowSelection: true,
   })
 
   return (
