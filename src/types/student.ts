@@ -27,3 +27,15 @@ export interface StudentsResponse {
   skip: number
   limit: number
 }
+
+export type StudentExportData = {
+  id: number
+  firstName: string
+  lastName: string
+  email: string
+  phone: string
+  class: string
+  grade: number
+  birthDate: string
+  address: string
+}

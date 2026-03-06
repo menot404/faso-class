@@ -1,3 +1,5 @@
+import type { StudentExportData, Student } from "@/types";
+
 export function exportToCSV<T extends Record<string, unknown>>(
   data: T[],
   filename: string,
@@ -47,4 +49,32 @@ export function generateCSVBlob<T extends Record<string, unknown>>(
   const csv = [headers.join(','), ...rows].join('\n')
   const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' })
   return URL.createObjectURL(blob)
+}
+
+export function exportStudentsToCSV(students: Student[], filename: string = 'etudiants') {
+  const data: StudentExportData[] = students.map(s => ({
+    id: s.id,
+    firstName: s.firstName,
+    lastName: s.lastName,
+    email: s.email,
+    phone: s.phone || '',
+    class: s.class || '',
+    grade: s.grade || 0,
+    birthDate: s.birthDate || '',
+    address: s.address || '',
+  }))
+
+  const columns: { key: keyof StudentExportData; label: string }[] = [
+    { key: 'id', label: 'ID' },
+    { key: 'firstName', label: 'Prénom' },
+    { key: 'lastName', label: 'Nom' },
+    { key: 'email', label: 'Email' },
+    { key: 'phone', label: 'Téléphone' },
+    { key: 'class', label: 'Classe' },
+    { key: 'grade', label: 'Niveau' },
+    { key: 'birthDate', label: 'Date de naissance' },
+    { key: 'address', label: 'Adresse' },
+  ]
+
+  exportToCSV(data, filename, columns)
 }
