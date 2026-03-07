@@ -53,3 +53,24 @@ export const useDeleteStudent = () => {
     },
   })
 }
+
+export const useDeleteStudents = () => {
+  const queryClient = useQueryClient()
+  const { t } = useTranslation('students')
+  const deleteOne = useDeleteStudent() // la mutation individuelle
+
+  const deleteMany = useMutation({
+    mutationFn: async (ids: number[]) => {
+      await Promise.all(ids.map(id => deleteOne.mutateAsync(id)))
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: [STUDENTS_QUERY_KEY] })
+      toast.success(t('messages.deletedSelected', 'Étudiants supprimés avec succès'))
+    },
+    onError: () => {
+      toast.error(t('messages.error', 'Erreur lors de la suppression'))
+    },
+  })
+
+  return deleteMany
+}
