@@ -34,30 +34,45 @@ export function ImportStudents({ open, onClose, onSuccess }: ImportStudentsProps
       header: true,
       skipEmptyLines: true,
       complete: (results) => {
-        const students = results.data as any[]
-        // Validation simple
-        const validStudents = students.filter(s => s.firstName && s.lastName && s.email)
+        const rows = results.data
+        // Filtrer les lignes valides (avec firstName, lastName, email)
+        const validRows = rows.filter(row => row.firstName && row.lastName && row.email)
         
-        if (validStudents.length === 0) {
+        if (validRows.length === 0) {
           setError(t('import.noValidData', 'Aucune donnée valide trouvée'))
           setImporting(false)
           return
         }
 
+        // Transformer les lignes CSV en objets Student (adapter selon votre type)
+        const studentsToCreate = validRows.map(row => ({
+          firstName: row.firstName!,
+          lastName: row.lastName!,
+          email: row.email!,
+          phone: row.phone || '',
+          class: row.class || '',
+          grade: row.grade || '',
+          birthDate: row.birthDate || '',
+          address: row.address || '',
+          // Ajoutez d'autres champs selon votre modèle
+        }))
+
         // Importer chaque étudiant
-        Promise.all(validStudents.map(s => createStudent.mutateAsync(s)))
+        Promise.all(studentsToCreate.map(studentData => createStudent.mutateAsync(studentData)))
           .then(() => {
             setImporting(false)
             onSuccess?.()
             onClose()
           })
-          .catch(err => {
-            setError(err.message)
+          .catch((err: unknown) => {
+            const message = err instanceof Error ? err.message : 'Erreur inconnue'
+            setError(message)
             setImporting(false)
           })
       },
-      error: (err: any) => {
-        setError(err.message)
+      error: (err: unknown) => {
+        const message = err instanceof Error ? err.message : 'Erreur inconnue'
+        setError(message)
         setImporting(false)
       },
     })

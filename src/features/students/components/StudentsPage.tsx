@@ -1,5 +1,5 @@
-// src/features/students/components/StudentsPage.tsx
 import { useState } from 'react'
+import { useQueryClient } from '@tanstack/react-query'
 import { PageContainer } from '@/components/shared/PageContainer'
 import { StudentTable } from './StudentTable'
 import { StudentFilters } from './StudentFilters'
@@ -11,12 +11,16 @@ import { Button } from '@/components/ui/button'
 import { Plus } from 'lucide-react'
 import { useTranslation } from '@/hooks/useTranslation'
 import { useDebounce } from '@/hooks/useDebounce'
-import type { Student } from '@/types'
+import { useStudents } from '../hooks/useStudents'
+import { useDeleteStudents } from '../hooks/useStudentMutations'
+import type { Student } from '@/types/student'
 
 const StudentsPage = () => {
   const { t } = useTranslation('students')
+  const queryClient = useQueryClient()
   const [search, setSearch] = useState('')
   const debouncedSearch = useDebounce(search, 500)
+  const [pagination, setPagination] = useState({ pageIndex: 0, pageSize: 10 })
 
   const [isFormOpen, setIsFormOpen] = useState(false)
   const [editingStudent, setEditingStudent] = useState<Student | null>(null)
@@ -24,6 +28,14 @@ const StudentsPage = () => {
   const [detailStudent, setDetailStudent] = useState<Student | null>(null)
   const [isDetailOpen, setIsDetailOpen] = useState(false)
   const [isImportOpen, setIsImportOpen] = useState(false)
+
+  const { data, isLoading } = useStudents({
+    page: pagination.pageIndex + 1,
+    limit: pagination.pageSize,
+    search: debouncedSearch,
+  })
+
+  const deleteStudents = useDeleteStudents()
 
   const handleEdit = (student: Student) => {
     setEditingStudent(student)
@@ -46,14 +58,15 @@ const StudentsPage = () => {
   }
 
   const handleDeleteSelected = () => {
-    // Implémenter la suppression groupée
-    console.log('Supprimer les IDs:', selectedIds)
-    // À faire : appeler une mutation qui supprime en lot
+    if (selectedIds.length === 0) return
+    deleteStudents.mutate(selectedIds, {
+      onSuccess: () => setSelectedIds([]),
+    })
   }
 
   const handleImportSuccess = () => {
-    // Rafraîchir la liste
-    // On pourrait invalider la query ou recharger
+    queryClient.invalidateQueries({ queryKey: ['students'] }) // À adapter si votre clé est différente
+    setIsImportOpen(false)
   }
 
   return (
@@ -62,10 +75,10 @@ const StudentsPage = () => {
         <h1 className="text-2xl font-bold">{t('Gestion des étudiants')}</h1>
         <div className="flex items-center gap-2">
           <StudentActions
+            students={data?.users ?? []}
             selectedIds={selectedIds}
             onImport={() => setIsImportOpen(true)}
             onDeleteSelected={handleDeleteSelected}
-            //students={}
           />
           <Button onClick={() => setIsFormOpen(true)}>
             <Plus className="mr-2 h-4 w-4" />
@@ -76,9 +89,13 @@ const StudentsPage = () => {
 
       <StudentFilters value={search} onChange={setSearch} />
       <StudentTable
+        data={data?.users ?? []}
+        total={data?.total ?? 0}
+        isLoading={isLoading}
+        pagination={pagination}
+        onPaginationChange={setPagination}
         onEdit={handleEdit}
         onView={handleView}
-        search={debouncedSearch}
         onSelectionChange={setSelectedIds}
       />
 
